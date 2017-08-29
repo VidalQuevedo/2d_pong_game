@@ -10,13 +10,13 @@
 	var ballY = canvas.height / 2;
 	var ballRadius = 10;
 	var ctx = canvas.getContext('2d');
-	var dx = 3;
-	var dy = -3;
+	var dx = 5;
+	var dy = -5;
 	var isUpKeyPressed = false;
 	var isDownKeyPressed = false;
 	var isWKeyPressed = false;
 	var isSKeyPressed = false;
-	var paddleHeight = 70;
+	var paddleHeight = 90;
 	var paddleWidth = 10;
 	var paddle1X = 0;
 	var paddle1Y = (canvas.height - paddleWidth) / 2;	
@@ -35,10 +35,22 @@
 	}
 
 	function ballCollisionDetection() {
+		
 		// ceiling and floor 
 		if (ballY - ballRadius <= 0 || ballY + ballRadius >= canvas.height) {
 			dy = -dy;
 		}
+
+		// paddle1
+		if (ballX - ballRadius <= paddle1X && ballY > paddle1Y && ballY < paddle1Y + paddleHeight) {
+			dx = -dx;
+		}
+
+		// paddle2
+		if (ballX + ballRadius >= paddle2X && ballY > paddle2Y && ballY < paddle2Y + paddleHeight) {
+			dx = -dx;
+		}
+
 	}	
 
 	function clearCanvas() {
