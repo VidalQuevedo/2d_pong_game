@@ -12,6 +12,12 @@
 	var ctx = canvas.getContext('2d');
 	var dx = 3;
 	var dy = -3;
+	var paddleHeight = 70;
+	var paddleWidth = 10;
+	var paddle1X = 0;
+	var paddle1Y = (canvas.height - paddleWidth) / 2;	
+	var paddle2X = canvas.width - paddleWidth;
+	var paddle2Y = (canvas.height - paddleWidth) / 2;
 
 	init();
 
@@ -34,6 +40,7 @@
 		clearCanvas();
 		drawNetLine();
 		drawBall();
+		drawPaddles();
 		ballCollisionDetection();
 		requestAnimationFrame(draw);
 	}
@@ -57,6 +64,22 @@
 		ctx.lineTo(canvas.width / 2, canvas.height);
 		ctx.strokeStyle = '#CCCCCC';
 		ctx.stroke();
+		ctx.closePath();
+	}
+
+	function drawPaddles() {
+		// paddle 1
+		ctx.beginPath();
+		ctx.rect(paddle1X, paddle1Y, paddleWidth, paddleHeight);
+		ctx.fillStyle = '#CCCCCC';
+		ctx.fill();
+		ctx.closePath();
+
+		// paddle q
+		ctx.beginPath();
+		ctx.rect(paddle2X, paddle2Y, paddleWidth, paddleHeight);
+		ctx.fillStyle = '#CCCCCC';
+		ctx.fill();
 		ctx.closePath();
 	}
 
