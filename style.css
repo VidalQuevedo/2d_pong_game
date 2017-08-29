@@ -1,0 +1,7 @@
+* {
+	border: 0;
+	margin: 0;
+}
+#2d-pong-game-canvas {
+	border: 1px solid red;
+}
