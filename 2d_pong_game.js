@@ -137,15 +137,15 @@
 	function updatePaddlePosition() {
 
 		// paddle 1
-		if (isWKeyPressed) {
+		if (isWKeyPressed && paddle1Y > 0) {
 			paddle1Y -= 7;
-		} else if (isSKeyPressed) {
+		} else if (isSKeyPressed && paddle1Y + paddleHeight < canvas.height) {
 			paddle1Y += 7;
 		} 
 		// paddle 2
-		if (isUpKeyPressed) {
+		if (isUpKeyPressed && paddle2Y > 0) {
 			paddle2Y -= 7;
-		} else if (isDownKeyPressed) {
+		} else if (isDownKeyPressed && paddle2Y + paddleHeight < canvas.height) {
 			paddle2Y += 7;
 		} 
 	}
