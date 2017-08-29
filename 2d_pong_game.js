@@ -10,8 +10,8 @@
 	var ballY = canvas.height / 2;
 	var ballRadius = 10;
 	var ctx = canvas.getContext('2d');
-	var dx = 5;
-	var dy = -5;
+	var dx = 6;
+	var dy = -6;
 	var isUpKeyPressed = false;
 	var isDownKeyPressed = false;
 	var isWKeyPressed = false;
@@ -49,8 +49,8 @@
 			if (ballY > paddle1Y && ballY < paddle1Y + paddleHeight) {
 				dx = -dx;
 			} else {
-				p1Score++;
-				startNewRound();
+				p2Score++;
+				checkGameStatus();
 			}
 		} 
 
@@ -59,12 +59,24 @@
 			if (ballY > paddle2Y && ballY < paddle2Y + paddleHeight) {
 				dx = -dx;
 			} else {
-				p2Score++;
-				startNewRound();
+				p1Score++;
+				checkGameStatus();
 			}
 		}
 
-	}	
+	}
+
+	function checkGameStatus() {
+		if (p1Score === 10) {
+			alert('Player 1 wins!');
+			document.location.reload();
+		}
+		if (p2Score === 10) {
+			alert('Player 2 wins!');
+			document.location.reload();
+		}
+		startNewRound();		
+	}
 
 	function clearCanvas() {
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
