@@ -44,7 +44,7 @@
 		}
 
 		// paddle1
-		if (ballX - ballRadius < paddle1X) {
+		if (ballX - ballRadius <= paddle1X) {
 			if (ballY > paddle1Y && ballY < paddle1Y + paddleHeight) {
 				dx = -dx;
 			} else {
@@ -54,7 +54,7 @@
 		} 
 
 		// paddle2
-		if (ballX + ballRadius > paddle2X) {
+		if (ballX + ballRadius >= paddle2X) {
 			if (ballY > paddle2Y && ballY < paddle2Y + paddleHeight) {
 				dx = -dx;
 			} else {
@@ -75,6 +75,7 @@
 		drawNetLine();
 		drawBall();
 		drawPaddles();
+		drawScores();
 		updatePaddlePosition();
 		ballCollisionDetection();
 		requestAnimationFrame(draw);
@@ -110,12 +111,28 @@
 		ctx.fill();
 		ctx.closePath();
 
-		// paddle q
+		// paddle 2
 		ctx.beginPath();
 		ctx.rect(paddle2X, paddle2Y, paddleWidth, paddleHeight);
 		ctx.fillStyle = '#000000';
 		ctx.fill();
 		ctx.closePath();
+	}
+
+	function drawScores() {
+		// P1 Score
+		ctx.beginPath();
+		ctx.font = '64px \'Courier New\'';
+		ctx.fillStyle = '#000000';
+		ctx.fillText(p1Score, canvas.width / 2 - 104, 64);
+		ctx.closePath();
+
+		// P2 Score
+		ctx.beginPath();
+		ctx.font = '64px \'Courier New\'';
+		ctx.fillStyle = '#000000';
+		ctx.fillText(p2Score, canvas.width / 2 + 64, 64);
+		ctx.closePath()		
 	}
 
 	function handleKeyDown($event) {
