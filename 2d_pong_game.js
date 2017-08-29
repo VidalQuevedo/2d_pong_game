@@ -22,6 +22,8 @@
 	var paddle1Y = (canvas.height - paddleWidth) / 2;	
 	var paddle2X = canvas.width - paddleWidth;
 	var paddle2Y = (canvas.height - paddleWidth) / 2;
+	var p1Score = 0;
+	var p2Score = 0;
 
 	init();
 
@@ -37,18 +39,28 @@
 	function ballCollisionDetection() {
 		
 		// ceiling and floor 
-		if (ballY - ballRadius <= 0 || ballY + ballRadius >= canvas.height) {
+		if (ballY - ballRadius < 0 || ballY + ballRadius > canvas.height) {
 			dy = -dy;
 		}
 
 		// paddle1
-		if (ballX - ballRadius <= paddle1X && ballY > paddle1Y && ballY < paddle1Y + paddleHeight) {
-			dx = -dx;
-		}
+		if (ballX - ballRadius < paddle1X) {
+			if (ballY > paddle1Y && ballY < paddle1Y + paddleHeight) {
+				dx = -dx;
+			} else {
+				p1Score++;
+				startNewRound();
+			}
+		} 
 
 		// paddle2
-		if (ballX + ballRadius >= paddle2X && ballY > paddle2Y && ballY < paddle2Y + paddleHeight) {
-			dx = -dx;
+		if (ballX + ballRadius > paddle2X) {
+			if (ballY > paddle2Y && ballY < paddle2Y + paddleHeight) {
+				dx = -dx;
+			} else {
+				p2Score++;
+				startNewRound();
+			}
 		}
 
 	}	
@@ -107,43 +119,48 @@
 	}
 
 	function handleKeyDown($event) {
-		$event.preventDefault();
 		switch($event.keyCode) {
 			case 38:
-				isUpKeyPressed = true;
+			isUpKeyPressed = true;
 			break;
 			case 40:
-				isDownKeyPressed = true;
+			isDownKeyPressed = true;
 			break;
 			case 87:
-				isWKeyPressed = true;
+			isWKeyPressed = true;
 			break;
 			case 83:
-				isSKeyPressed = true;
+			isSKeyPressed = true;
 			break;
 		}
 	}
 
 	function handleKeyUp($event) {
-		$event.preventDefault();
 		switch($event.keyCode) {
 			case 38:
-				isUpKeyPressed = false;
+			isUpKeyPressed = false;
 			break;
 			case 40:
-				isDownKeyPressed = false;
+			isDownKeyPressed = false;
 			break;
 			case 87:
-				isWKeyPressed = false;
+			isWKeyPressed = false;
 			break;
 			case 83:
-				isSKeyPressed = false;
+			isSKeyPressed = false;
 			break;
 		}
 	}
 
 	function init() {
 		draw();
+	}
+
+	function startNewRound() {
+		ballX = canvas.width / 2;
+		ballY = canvas.height / 2;
+		dx = -dx;
+		dy = -dy;		
 	}
 
 	function updatePaddlePosition() {
@@ -161,5 +178,6 @@
 			paddle2Y += 7;
 		} 
 	}
+
 
 })();
