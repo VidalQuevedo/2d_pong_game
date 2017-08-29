@@ -24,6 +24,7 @@
 	var paddle2Y = (canvas.height - paddleWidth) / 2;
 	var p1Score = 0;
 	var p2Score = 0;
+	var roundCount = 1;
 
 	init();
 
@@ -174,10 +175,17 @@
 	}
 
 	function startNewRound() {
+		roundCount++;
 		ballX = canvas.width / 2;
 		ballY = canvas.height / 2;
 		dx = -dx;
-		dy = -dy;		
+		dy = -dy;
+
+		// increase speed
+		if (roundCount % 3 === 0) {
+			dx = (dx < 0) ? dx - 0.5 : dx + 0.5;
+			dy = (dy < 0) ? dy - 0.5 : dy + 0.5;
+		}
 	}
 
 	function updatePaddlePosition() {
