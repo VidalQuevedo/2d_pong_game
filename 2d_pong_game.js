@@ -15,12 +15,12 @@
 
 	init();
 
+	
 	////////////////////
 
 
 	function ballCollisionDetection() {
 		// ceiling and floor 
-		console.log(ballY + ballRadius, 0, ballY + ballRadius,  canvas.height);
 		if (ballY - ballRadius <= 0 || ballY + ballRadius >= canvas.height) {
 			dy = -dy;
 		}
@@ -32,6 +32,7 @@
 
 	function draw() {
 		clearCanvas();
+		drawNetLine();
 		drawBall();
 		ballCollisionDetection();
 		requestAnimationFrame(draw);
@@ -47,6 +48,16 @@
 		// update ball coordinates
 		ballX += dx;
 		ballY += dy;
+	}
+
+	function drawNetLine() {
+		ctx.beginPath();
+		ctx.setLineDash([10, 10]);
+		ctx.moveTo(canvas.width / 2, 0);
+		ctx.lineTo(canvas.width / 2, canvas.height);
+		ctx.strokeStyle = '#CCCCCC';
+		ctx.stroke();
+		ctx.closePath();
 	}
 
 	function init() {
