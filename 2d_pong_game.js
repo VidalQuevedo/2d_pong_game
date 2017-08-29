@@ -12,6 +12,10 @@
 	var ctx = canvas.getContext('2d');
 	var dx = 3;
 	var dy = -3;
+	var isUpKeyPressed = false;
+	var isDownKeyPressed = false;
+	var isWKeyPressed = false;
+	var isSKeyPressed = false;
 	var paddleHeight = 70;
 	var paddleWidth = 10;
 	var paddle1X = 0;
@@ -25,6 +29,11 @@
 	////////////////////
 
 
+	function addEventListeners() {
+		document.addEventListener('keydown', handleKeyDown, false);
+		document.addEventListener('keyup', handleKeyUp, false);
+	}
+
 	function ballCollisionDetection() {
 		// ceiling and floor 
 		if (ballY - ballRadius <= 0 || ballY + ballRadius >= canvas.height) {
@@ -37,10 +46,12 @@
 	}
 
 	function draw() {
+		addEventListeners();
 		clearCanvas();
 		drawNetLine();
 		drawBall();
 		drawPaddles();
+		updatePaddlePosition();
 		ballCollisionDetection();
 		requestAnimationFrame(draw);
 	}
@@ -48,7 +59,7 @@
 	function drawBall() {
 		ctx.beginPath();
 		ctx.arc(ballX, ballY, ballRadius, 0, Math.PI * 2);
-		ctx.fillStyle = '#CCCCCC';
+		ctx.fillStyle = '#000000';
 		ctx.fill();
 		ctx.closePath();
 
@@ -62,7 +73,7 @@
 		ctx.setLineDash([10, 10]);
 		ctx.moveTo(canvas.width / 2, 0);
 		ctx.lineTo(canvas.width / 2, canvas.height);
-		ctx.strokeStyle = '#CCCCCC';
+		ctx.strokeStyle = '#000000';
 		ctx.stroke();
 		ctx.closePath();
 	}
@@ -71,20 +82,72 @@
 		// paddle 1
 		ctx.beginPath();
 		ctx.rect(paddle1X, paddle1Y, paddleWidth, paddleHeight);
-		ctx.fillStyle = '#CCCCCC';
+		ctx.fillStyle = '#000000';
 		ctx.fill();
 		ctx.closePath();
 
 		// paddle q
 		ctx.beginPath();
 		ctx.rect(paddle2X, paddle2Y, paddleWidth, paddleHeight);
-		ctx.fillStyle = '#CCCCCC';
+		ctx.fillStyle = '#000000';
 		ctx.fill();
 		ctx.closePath();
 	}
 
+	function handleKeyDown($event) {
+		$event.preventDefault();
+		switch($event.keyCode) {
+			case 38:
+				isUpKeyPressed = true;
+			break;
+			case 40:
+				isDownKeyPressed = true;
+			break;
+			case 87:
+				isWKeyPressed = true;
+			break;
+			case 83:
+				isSKeyPressed = true;
+			break;
+		}
+	}
+
+	function handleKeyUp($event) {
+		$event.preventDefault();
+		switch($event.keyCode) {
+			case 38:
+				isUpKeyPressed = false;
+			break;
+			case 40:
+				isDownKeyPressed = false;
+			break;
+			case 87:
+				isWKeyPressed = false;
+			break;
+			case 83:
+				isSKeyPressed = false;
+			break;
+		}
+	}
+
 	function init() {
 		draw();
+	}
+
+	function updatePaddlePosition() {
+
+		// paddle 1
+		if (isWKeyPressed) {
+			paddle1Y -= 7;
+		} else if (isSKeyPressed) {
+			paddle1Y += 7;
+		} 
+		// paddle 2
+		if (isUpKeyPressed) {
+			paddle2Y -= 7;
+		} else if (isDownKeyPressed) {
+			paddle2Y += 7;
+		} 
 	}
 
 })();
