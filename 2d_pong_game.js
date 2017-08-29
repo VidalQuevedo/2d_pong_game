@@ -17,6 +17,15 @@
 
 	////////////////////
 
+
+	function ballCollisionDetection() {
+		// ceiling and floor 
+		console.log(ballY + ballRadius, 0, ballY + ballRadius,  canvas.height);
+		if (ballY - ballRadius <= 0 || ballY + ballRadius >= canvas.height) {
+			dy = -dy;
+		}
+	}	
+
 	function clearCanvas() {
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 	}
@@ -24,6 +33,7 @@
 	function draw() {
 		clearCanvas();
 		drawBall();
+		ballCollisionDetection();
 		requestAnimationFrame(draw);
 	}
 
